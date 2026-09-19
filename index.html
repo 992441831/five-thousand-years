@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五千年视角</title>
+    <style>
+        :root {
+            --bg-deep: #070a14;
+            --bg-card: rgba(20, 25, 45, 0.62);
+            --border-card: rgba(140, 160, 255, 0.14);
+            --text-main: #e8eaf0;
+            --text-dim: #b0b6c3;
+            --accent-blue: #1e80ff;
+            --accent-purple: #a855f7;
+            --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 10px 32px rgba(0, 0, 0, 0.55), 0 0 20px rgba(88, 100, 255, 0.12);
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", sans-serif;
+            line-height: 1.8;
+            color: var(--text-main);
+            background: var(--bg-deep);
+            background-image:
+                radial-gradient(900px 620px at 10% -12%, rgba(88, 64, 190, 0.32), transparent 65%),
+                radial-gradient(860px 640px at 94% 4%, rgba(30, 128, 255, 0.18), transparent 65%),
+                radial-gradient(780px 580px at 80% 90%, rgba(156, 62, 176, 0.16), transparent 65%),
+                radial-gradient(640px 520px at 28% 112%, rgba(38, 96, 210, 0.14), transparent 65%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        #starfield {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 4rem;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 2rem 2.25rem;
+            margin-bottom: 1.75rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin: 0 0 1rem;
+            background: linear-gradient(90deg, var(--text-main) 0%, var(--accent-blue) 60%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .hero .question {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            color: var(--text-main);
+            margin: 0 0 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        p {
+            color: var(--text-dim);
+            margin: 0.75rem 0;
+        }
+
+        strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .principles {
+            list-style: none;
+            padding: 0;
+        }
+
+        .principles li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-dim);
+            margin: 0.6rem 0;
+        }
+
+        .principles li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+        }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .article-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.875rem;
+            padding: 1rem 1.125rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .article-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(140, 160, 255, 0.35);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .article-card .num {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(30, 128, 255, 0.2), rgba(168, 85, 247, 0.2));
+            color: var(--accent-blue);
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: 1px solid rgba(140, 160, 255, 0.2);
+        }
+
+        .article-card .title {
+            color: var(--text-main);
+            font-weight: 500;
+            line-height: 1.55;
+        }
+
+        .article-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .article-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            color: var(--text-dim);
+            margin: 0.5rem 0;
+        }
+
+        .article-list li::before {
+            content: "◦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-purple);
+        }
+
+        blockquote {
+            border-left: 3px solid var(--accent-blue);
+            margin: 1.5rem 0 0;
+            padding: 0.75rem 1rem;
+            background: rgba(30, 128, 255, 0.06);
+            border-radius: 0 8px 8px 0;
+            color: var(--text-dim);
+        }
+
+        blockquote a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        code {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+            color: var(--accent-purple);
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-card), transparent);
+            margin: 1.5rem 0;
+        }
+
+        .footer-hint {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.5rem 1rem 2.5rem; }
+            .glass-card { padding: 1.5rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero { padding: 2rem 1rem; }
+            .article-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+
+    <div class="container">
+        <section class="glass-card hero">
+            <h1>五千年视角</h1>
+            <p class="subtitle">站在上下五千年的尺度上，观察中国社会的深层结构、文明切换与当代症候。</p>
+            <p class="question">今天的很多“社会热点”，如果把时间轴拉长，会看到什么样的根？</p>
+        </section>
+
+        <section class="glass-card">
+            <h2>写作原则</h2>
+            <ul class="principles">
+                <li><strong>长时段</strong>：不只看近四十年，也看帝制、农耕、宗法留下的长期遗产。</li>
+                <li><strong>结构性</strong>：不轻易说“人心坏了”，优先解释生产关系、制度安排、空间形态如何塑造了人的行为。</li>
+                <li><strong>同情的理解</strong>：既不美化过去，也不妖魔化现在；切换期有代价，也有新的可能。</li>
+            </ul>
+        </section>
+
+        <section class="glass-card">
+            <h2>已更新</h2>
+            <div class="article-grid">
+                <a class="article-card" href="html/00-opening-report.html">
+                    <span class="num">00</span>
+                    <span class="title">【五千年视角】开篇报告：我们要怎样在一起生活</span>
+                </a>
+                <a class="article-card" href="html/chinese-society-transition.html">
+                    <span class="num">01</span>
+                    <span class="title">【五千年视角】从熟人社会到原子化个体：人情味为什么淡了</span>
+                </a>
+                <a class="article-card" href="html/02-four-occupations-reversal.html">
+                    <span class="num">02</span>
+                    <span class="title">【五千年视角】士农工商的千年颠倒：今天的“新贵”与“旧梦”</span>
+                </a>
+                <a class="article-card" href="html/03-land-complex.html">
+                    <span class="num">03</span>
+                    <span class="title">【五千年视角】土地情结：中国人为什么 obsessed with 买房</span>
+                </a>
+                <a class="article-card" href="html/04-unification-and-involution.html">
+                    <span class="num">04</span>
+                    <span class="title">【五千年视角】大一统与内卷：中央集权如何塑造今天的竞争格局</span>
+                </a>
+                <a class="article-card" href="html/05-east-asia-involution.html">
+                    <span class="num">05</span>
+                    <span class="title">【五千年视角】为什么日韩与中国一样内卷，而西方没有</span>
+                </a>
+                <a class="article-card" href="html/06-compressed-modernization.html">
+                    <span class="num">06</span>
+                    <span class="title">【五千年视角】压缩式现代化</span>
+                </a>
+                <a class="article-card" href="html/07-surviving-compressed-modernization.html">
+                    <span class="num">07</span>
+                    <span class="title">【五千年视角】压缩式现代化中的个体生存之道</span>
+                </a>
+                <a class="article-card" href="html/08-self-care-prescription.html">
+                    <span class="num">08</span>
+                    <span class="title">【五千年视角】压缩式现代化中的个体生存之道-善待自己是一剂药方</span>
+                </a>
+                <a class="article-card" href="html/09-labor-supervision-dilemma.html">
+                    <span class="num">09</span>
+                    <span class="title">【五千年视角】劳动监管现实困境</span>
+                </a>
+                <a class="article-card" href="html/10-labor-supervision-xingyu-case.html">
+                    <span class="num">10</span>
+                    <span class="title">【五千年视角】劳动监管现实困境-结合星宇股份事件</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="glass-card">
+            <h2>待更新（选题储备）</h2>
+            <ul class="article-list">
+                <li>【五千年视角】关系、人脉与算法：中国人社交网络的古今变奏</li>
+                <li>【五千年视角】面子、人情与契约：三件套的当代变形</li>
+                <li>【五千年视角】催婚背后的文明焦虑：家族延续如何压倒个体幸福</li>
+                <li>【五千年视角】90 后对婚姻的重新定义：从“人生必选项”到“可选项”</li>
+                <li>【五千年视角】从“三从四德”到“她经济”：女性地位的千年曲线</li>
+                <li>【五千年视角】独生子女一代：被倒悬的家庭结构与养老困境</li>
+                <li>【五千年视角】高考：现代科举与读书人的千年执念</li>
+                <li>【五千年视角】教育内卷的历史根源：为什么中国人这么爱“鸡娃”</li>
+                <li>【五千年视角】阶层流动与固化：中国历史是一部循环史</li>
+                <li>【五千年视角】“青天大老爷”情结：我们为什么总盼望一个拯救者</li>
+                <li>【五千年视角】明哲保身与公共参与：沉默的大多数从何而来</li>
+                <li>【五千年视角】“法”与“情”的千年拉扯：中国人的规则观</li>
+                <li>【五千年视角】储蓄率与安全感：中国人为什么爱存钱</li>
+                <li>【五千年视角】从节俭持家到精致穷：消费主义的入侵与抵抗</li>
+                <li>【五千年视角】乡土中国的消逝与“乡愁”产业链</li>
+                <li>【五千年视角】大国崛起与小我焦虑：集体叙事下的个体位置</li>
+            </ul>
+            <hr />
+            <blockquote>
+                <p>本系列为学习项目 <a href="../../README.md">myfirst-ai-project</a> 的内容板块之一，文章标题统一带【五千年视角】前缀，供前端 <code>src/utils/boards.js</code> 归类展示。</p>
+            </blockquote>
+        </section>
+
+        <p class="footer-hint">✦ 在星空下阅读五千年 ✦</p>
+    </div>
+
+    <script>
+        (function () {
+            const canvas = document.getElementById('starfield');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            const stars = [];
+            const STAR_COUNT = 180;
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+            }
+
+            function random(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function initStars() {
+                stars.length = 0;
+                for (let i = 0; i < STAR_COUNT; i++) {
+                    stars.push({
+                        x: random(0, width),
+                        y: random(0, height),
+                        r: random(0.3, 1.6),
+                        alpha: random(0.2, 0.9),
+                        speed: random(0.005, 0.02),
+                        direction: Math.random() > 0.5 ? 1 : -1
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                for (const s of stars) {
+                    s.alpha += s.speed * s.direction;
+                    if (s.alpha >= 0.95 || s.alpha <= 0.15) {
+                        s.direction *= -1;
+                    }
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(210, 220, 255, ${s.alpha})`;
+                    ctx.fill();
+                }
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', () => {
+                resize();
+                initStars();
+            });
+
+            resize();
+            initStars();
+            draw();
+        })();
+    </script>
+</body>
+</html>
