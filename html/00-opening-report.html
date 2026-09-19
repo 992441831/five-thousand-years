@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【五千年视角】开篇报告：我们要怎样在一起生活</title>
+    <style>
+    :root {
+        --bg-deep: #070a14;
+        --bg-card: rgba(20, 25, 45, 0.62);
+        --border-card: rgba(140, 160, 255, 0.14);
+        --text-main: #e8eaf0;
+        --text-dim: #b0b6c3;
+        --accent-blue: #1e80ff;
+        --accent-purple: #a855f7;
+        --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
+        --shadow-hover: 0 10px 32px rgba(0, 0, 0, 0.55), 0 0 20px rgba(88, 100, 255, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", sans-serif;
+        line-height: 1.8;
+        color: var(--text-main);
+        background: var(--bg-deep);
+        background-image:
+            radial-gradient(900px 620px at 10% -12%, rgba(88, 64, 190, 0.32), transparent 65%),
+            radial-gradient(860px 640px at 94% 4%, rgba(30, 128, 255, 0.18), transparent 65%),
+            radial-gradient(780px 580px at 80% 90%, rgba(156, 62, 176, 0.16), transparent 65%),
+            radial-gradient(640px 520px at 28% 112%, rgba(38, 96, 210, 0.14), transparent 65%);
+        background-attachment: fixed;
+        overflow-x: hidden;
+    }
+
+    #starfield {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 3rem;
+    }
+
+    .glass-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: 16px;
+        box-shadow: var(--shadow-card);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        padding: 2rem 2.25rem;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+        box-shadow: var(--shadow-hover);
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--accent-blue);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+        color: var(--accent-purple);
+    }
+
+    .article-body {
+        color: var(--text-dim);
+    }
+
+    .article-body h1 {
+        font-size: 2rem;
+        background: linear-gradient(90deg, var(--text-main) 0%, var(--accent-blue) 70%, var(--accent-purple) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        border-bottom: 1px solid var(--border-card);
+        padding-bottom: 0.6rem;
+        margin-top: 0;
+    }
+
+    .article-body h2, .article-body h3, .article-body h4, .article-body h5, .article-body h6 {
+        color: var(--text-main);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .article-body a {
+        color: var(--accent-blue);
+        text-decoration: none;
+    }
+
+    .article-body a:hover {
+        text-decoration: underline;
+    }
+
+    .article-body strong {
+        color: var(--text-main);
+    }
+
+    .article-body code {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 0.15em 0.4em;
+        border-radius: 4px;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-size: 0.9em;
+        color: var(--accent-purple);
+    }
+
+    .article-body pre {
+        background: rgba(0, 0, 0, 0.25);
+        padding: 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        border: 1px solid var(--border-card);
+    }
+
+    .article-body pre code {
+        background: transparent;
+        padding: 0;
+        color: var(--text-main);
+    }
+
+    .article-body blockquote {
+        border-left: 3px solid var(--accent-blue);
+        margin: 1.5rem 0;
+        padding: 0.75rem 1rem;
+        background: rgba(30, 128, 255, 0.06);
+        border-radius: 0 8px 8px 0;
+        color: var(--text-dim);
+    }
+
+    .article-body table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 1rem 0;
+        border: 1px solid var(--border-card);
+    }
+
+    .article-body th, .article-body td {
+        border: 1px solid var(--border-card);
+        padding: 0.6rem 0.8rem;
+    }
+
+    .article-body th {
+        background: rgba(140, 160, 255, 0.1);
+        color: var(--text-main);
+    }
+
+    .article-body img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .article-body ul, .article-body ol {
+        padding-left: 1.5rem;
+    }
+
+    .article-body li {
+        margin: 0.4rem 0;
+    }
+
+    .article-body hr {
+        border: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border-card), transparent);
+        margin: 2rem 0;
+    }
+
+    .footer-hint {
+        text-align: center;
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        opacity: 0.7;
+        margin-top: 2rem;
+    }
+
+    @media (max-width: 640px) {
+        .container { padding: 1.5rem 1rem 2.5rem; }
+        .glass-card { padding: 1.5rem; }
+        .article-body h1 { font-size: 1.6rem; }
+    }
+</style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+
+    <div class="container">
+        <a class="back-link" href="README.html">← 返回目录</a>
+        <section class="glass-card article-body">
+            <h1 id="_1">【五千年视角】开篇报告：我们要怎样在一起生活</h1>
+            <blockquote>
+            <p>撰写时间：2026-08-24</p>
+            </blockquote>
+            <hr />
+            <h2 id="_2">一、为什么需要“五千年视角”</h2>
+            <p>今天的中国社会，几乎每个月都有新的热点让人焦虑：房价、内卷、催婚、生育率、教育军备竞赛、养老压力、人情淡漠、躺平与佛系……这些话题看起来各不相干，但如果你把镜头拉远，会发现它们共享一条暗线——<strong>中国正在经历一场文明级别的切换</strong>。</p>
+            <p>这场切换不是从 1978 年开始的，也不是从 1949 年开始的。它的根，要一直追溯到以小农经济、宗法制度、中央集权为底色的传统社会。那套系统运行了两千多年，塑造了我们的家庭结构、人际关系、成功观念、政治心理，甚至对身体的感知方式。而过去一百多年，尤其是过去四十多年，中国被迅速拽入工业文明、城市文明、工商文明、数字文明的多重叠加态。旧系统的很多零件还在运转，新系统的规则又已经写就，夹在中间的人，自然感到失重。</p>
+            <p>“五千年视角”这个系列，就是想用长时段的眼光，把今天的社会热点重新放回历史结构里看。我们不准备讲一部完整的通史，也不打算做廉价的道德批判——比如简单说一句“现在的人太功利了”“老一辈太封建了”。我们要问的是：<strong>是什么结构，让今天的人不得不功利？是什么遗产，让某些观念如此顽固？</strong></p>
+            <h2 id="_3">二、这个系列关心什么</h2>
+            <p>大致上，我们会沿着四条主线展开。</p>
+            <h3 id="_4">主线一：文明形态的切换</h3>
+            <p>中国社会的底色长期是农耕文明。土地是核心生产资料，家族是基本生产单位，人口流动性极低，“生于斯、长于斯、死于斯”是常态。这种生存模式天然需要高凝聚力的人际网络：宗族、邻里、人情、礼俗。而今天的城市文明以契约、交换、流动为核心，人不再依附土地，而是依附岗位、技能、资本与机会。两种文明对“人该如何生活在一起”给出了完全不同的答案，切换期的阵痛在所难免。</p>
+            <p>我们已写的第一篇《从熟人社会到原子化个体》，就是这条主线的起点。</p>
+            <h3 id="_5">主线二：制度遗产的当代变形</h3>
+            <p>科举制废了一百年，但“读书改变命运”的执念仍在；帝制终结了一百多年，但“青天大老爷”的心理原型仍在；宗法制度瓦解了，但“传宗接代”“光宗耀祖”的家族压力仍在。制度可以一夜废除，制度塑造的人心却需要几代人才能松动。</p>
+            <p>我们会看高考、考公、编制、户口、房产，如何以现代形式延续着古老的逻辑；也会看“找关系”“按闹分配”“人情债”这些看似落后的行为，为什么在某些场景里仍然有效。</p>
+            <h3 id="_6">主线三：家庭、性别与亲密关系的重构</h3>
+            <p>传统社会的家庭是一个生产单位、养老单位、教育单位、情感单位的多重复合体。现代社会把家庭的很多功能外包给了市场和国家，于是婚姻和生育从“人生必选项”变成了“可选项”。90 后、00 后对婚姻的态度，不是一代人突然变懒了，而是家庭作为制度的功能性下降了。</p>
+            <p>我们会写催婚、离婚、彩礼、性别分工、独生子女的养老困境，也会写女性地位从“三从四德”到“她经济”的漫长曲线。</p>
+            <h3 id="_7">主线四：精神生活与意义危机</h3>
+            <p>传统中国有一套完整意义系统：儒家提供伦理秩序，道家提供自然超脱，佛家提供轮回救赎，民间信仰提供日常慰藉。进入现代社会，这套意义系统被 weaken，但新的意义系统尚未完全建立。于是我们看到了成功学、鸡汤、国学热、躺平、佛系、emo 轮番登场——它们都是人们在为“我该如何活”寻找答案时，抓到的不同稻草。</p>
+            <h2 id="_8">三、我们的写法：四个“不”</h2>
+            <p>为了保证这个系列既不沦为历史科普，也不沦为情绪宣泄，我们给自己定了四个原则：</p>
+            <p><strong>第一，不美化过去。</strong> 农耕文明的人情味浓，是以个体被家族、礼教、村庄牢牢束缚为代价的。我们不会把“从前慢”浪漫化。</p>
+            <p><strong>第二，不妖魔化现在。</strong> 工商文明、城市文明带来了孤独和疏离，但也带来了个体自由、机会流动、女性解放、知识普及。我们不会把现代化简单说成堕落。</p>
+            <p><strong>第三，不做简单的道德审判。</strong> 我们尽量少说“中国人变了”“年轻人不行了”，而多说“什么样的结构，催生了这样的行为”。</p>
+            <p><strong>第四，不放弃建设性。</strong> 理解结构不是为了躺平，而是为了知道从哪里着手改变——无论是个人层面的自我安顿，还是社会层面的制度改良。</p>
+            <h2 id="_9">四、选题储备：接下来可能写什么</h2>
+            <p>下面是一份正在筹备的选题清单。它不是一个固定目录，而是一个问题地图——会随着写作过程中的新发现不断调整。</p>
+            <h3 id="_10">文明切换</h3>
+            <ul>
+            <li>士农工商的千年颠倒：今天的“新贵”与“旧梦”</li>
+            <li>土地情结：中国人为什么 obsessed with 买房</li>
+            <li>大一统与内卷：中央集权如何塑造今天的竞争格局</li>
+            </ul>
+            <h3 id="_11">人际关系</h3>
+            <ul>
+            <li>关系、人脉与算法：中国人社交网络的古今变奏</li>
+            <li>面子、人情与契约：三件套的当代变形</li>
+            <li>从“远亲不如近邻”到“邻居互不相识”：社区共同体的消亡与重建</li>
+            </ul>
+            <h3 id="_12">家庭与性别</h3>
+            <ul>
+            <li>催婚背后的文明焦虑：家族延续如何压倒个体幸福</li>
+            <li>90 后对婚姻的重新定义：从“人生必选项”到“可选项”</li>
+            <li>从“三从四德”到“她经济”：女性地位的千年曲线</li>
+            <li>独生子女一代：被倒悬的家庭结构与养老困境</li>
+            </ul>
+            <h3 id="_13">教育与阶层</h3>
+            <ul>
+            <li>高考：现代科举与读书人的千年执念</li>
+            <li>教育内卷的历史根源：为什么中国人这么爱“鸡娃”</li>
+            <li>阶层流动与固化：中国历史是一部循环史</li>
+            </ul>
+            <h3 id="_14">政治心理</h3>
+            <ul>
+            <li>“青天大老爷”情结：我们为什么总盼望一个拯救者</li>
+            <li>明哲保身与公共参与：沉默的大多数从何而来</li>
+            <li>“法”与“情”的千年拉扯：中国人的规则观</li>
+            </ul>
+            <h3 id="_15">经济行为</h3>
+            <ul>
+            <li>储蓄率与安全感：中国人为什么爱存钱</li>
+            <li>从节俭持家到精致穷：消费主义的入侵与抵抗</li>
+            </ul>
+            <h3 id="_16">精神生活</h3>
+            <ul>
+            <li>乡土中国的消逝与“乡愁”产业链</li>
+            <li>大国崛起与小我焦虑：集体叙事下的个体位置</li>
+            </ul>
+            <h2 id="_17">五、一个核心问题</h2>
+            <p>贯穿这个系列始终的，其实只有一个问题：<strong>我们要怎样在一起生活？</strong></p>
+            <p>五千年前，这个问题由血缘、部落、巫术来回答；两千年前，由宗族、礼教、帝制来回答；四十年前，由单位、公社、家庭来回答；今天，我们还在寻找答案。</p>
+            <p>城市化让我们从熟人社会进入陌生人社会；市场经济让我们从“关系优先”转向“契约优先”；互联网让我们从面对面交往转向屏幕化连接。这些变化带来了巨大的自由，也带来了巨大的孤独。旧的人情网络在瓦解，而新的人情形式尚未成熟——这正是当下许多人感到“没有人情味”的深层原因。</p>
+            <p>这个系列不会给出一个标准答案。我们只是想借助历史的长镜头，把问题看得更清楚一些：我们是从哪里来的，我们现在站在哪里，以及——如果新社会还需要“人情”，它可能以什么形式重新生长出来。</p>
+            <h2 id="_18">六、写给读者</h2>
+            <p>如果你对这个系列感兴趣，不需要任何历史专业背景。我们尽量用普通人能听懂的语言，把复杂的历史结构拆成一个个具体的生活场景。</p>
+            <p>你也可以把它当成一面镜子：每篇文章讨论的不只是“社会”，也是“我”——我为什么会焦虑，我为什么会被催婚，我为什么离不开手机，我为什么在躺平和内卷之间反复横跳。这些问题，只有放在足够长的时间轴上，才看得清来路。</p>
+            <p>五千年很长，一代人很短。但每一代人都在用脚下的路，回答那个古老的问题。</p>
+            <p>欢迎来到这个系列。</p>
+            <hr />
+            <p><strong>下一篇预告</strong></p>
+            <p><a href="chinese-society-transition.html">【五千年视角】从熟人社会到原子化个体：人情味为什么淡了</a></p>
+            <p>我们已经从农耕文明切换到工商文明，旧的人情网络在瓦解，新的连接方式尚未成熟。这不是中国人变冷漠了，而是文明切换期的结构性阵痛。</p>
+        </section>
+        <p class="footer-hint">✦ 在星空下阅读五千年 ✦</p>
+    </div>
+
+    <script>
+        (function () {
+            const canvas = document.getElementById('starfield');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            const stars = [];
+            const STAR_COUNT = 180;
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+            }
+
+            function random(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function initStars() {
+                stars.length = 0;
+                for (let i = 0; i < STAR_COUNT; i++) {
+                    stars.push({
+                        x: random(0, width),
+                        y: random(0, height),
+                        r: random(0.3, 1.6),
+                        alpha: random(0.2, 0.9),
+                        speed: random(0.005, 0.02),
+                        direction: Math.random() > 0.5 ? 1 : -1
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                for (const s of stars) {
+                    s.alpha += s.speed * s.direction;
+                    if (s.alpha >= 0.95 || s.alpha <= 0.15) {
+                        s.direction *= -1;
+                    }
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(210, 220, 255, ${s.alpha})`;
+                    ctx.fill();
+                }
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', () => {
+                resize();
+                initStars();
+            });
+
+            resize();
+            initStars();
+            draw();
+        })();
+    </script>
+</body>
+</html>
